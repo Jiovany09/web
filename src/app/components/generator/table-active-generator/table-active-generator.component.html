@@ -1,0 +1,100 @@
+<div class="mat-elevation-z8" id="contentTable">
+    <mat-form-field id="input">
+        <mat-label>Buscar por generador</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por generador" #input>
+    </mat-form-field>
+    <div id="contentTableWithColumsAndRows">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="generator" class="table-active">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Generador </th>
+                <td mat-cell *matCellDef="let example"> {{example.generator}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="serial">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial </th>
+                <td mat-cell *matCellDef="let example"> {{example.serial}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="estatus">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let example">
+                    <button *ngIf="example.estado" id="encendido" type="button" class="btn btn-success"
+                        (click)="encendidoApagado(example.id)">
+                        <i class="fas fa-toggle-on"></i> Encendido
+                    </button>
+                    <button *ngIf="!example.estado" type="button" class="btn btn-danger"
+                        (click)="encendidoApagado(example.id)">
+                        <i class="fas fa-toggle-off"></i> Apagado
+                    </button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="opciones">
+                <th mat-header-cell *matHeaderCellDef> Opciones </th>
+                <td mat-cell *matCellDef="let example">
+                    <button id="edit" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#editarGenerador" (click)="editar(example.id)">
+                        <i class="far fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger" (click)="delete(example.id)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let example; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td *ngIf="generadores == ''" class="mat-cell" colspan="4">No hay información</td>
+                <td *ngIf="generadores != ''" class="mat-cell" colspan="4">Ninguna coincidencia encontrada con
+                    "{{input.value}}"
+                </td>
+            </tr>
+        </table>
+        <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
+<div class="modal fade" id="editarGenerador" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form [formGroup]="form" (ngSubmit)="actualizar($event)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Editar Generador</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 col-12">
+                        <label for="serial_edit">Serial</label>
+                        <input type="text" formControlName="serial" name="serial" id="serial_edit" class="form-control"
+                            placeholder="Serial" [ngClass]="{ 'is-invalid': serialInvalid }">
+                        <div *ngIf="serialInvalid" class="invalid-feedback">
+                            <p *ngIf="serial.hasError('required')">
+                                Este campo es requerido
+                            </p>
+                            <p *ngIf="serial.hasError('pattern')">
+                                No se aceptan caracteres especiales
+                            </p>
+                            <p *ngIf="serial.hasError('minlength')">
+                                El mínimo es de 15 caracteres
+                            </p>
+                            <p *ngIf="serial.hasError('maxlength')">
+                                El máximo es de 20 caracteres
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="limpiar()">
+                        <i class="far fa-window-close"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" [disabled]="form.invalid"
+                        (click)="actualizar($event)">
+                        <i class="far fa-save"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

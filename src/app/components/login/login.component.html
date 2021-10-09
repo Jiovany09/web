@@ -1,0 +1,42 @@
+<div id="content">
+    <div id="card" class="card">
+        <div class="card-body">
+            <div id="img">
+                <img class="rounded" src="../../assets/img/logo.png" height="200px">
+            </div>
+            <h2 id="title" class="card-title h2">Iniciar Sesión</h2>
+            <form [formGroup]="form" (ngSubmit)="save($event)">
+                <div class="form-group">
+                    <input type="email" formControlName="email" name="email" class="form-control" id="email"
+                        placeholder="Correo electrónico" [ngClass]="{ 'is-invalid':  emailInvalid}">
+                    <div *ngIf="emailInvalid" class="invalid-feedback">
+                        <p *ngIf="email.hasError('required')">
+                            Este campo es requerido
+                        </p>
+                        <p *ngIf="email.hasError('email')">
+                            No es un email
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="password" formControlName="password" name="password" class="form-control" id="password"
+                        placeholder="Contraseña" [ngClass]="{ 'is-invalid':  passwordInvalid}">
+                    <div *ngIf="passwordInvalid" class="invalid-feedback">
+                        <p *ngIf="password.hasError('required')">
+                            Este campo es requerido
+                        </p>
+                        <p *ngIf="password.hasError('maxlength')">
+                            El máximo es de 30 catacteres
+                        </p>
+                        <p *ngIf="password.hasError('minlength')">
+                            El mínimo es de 8 catacteres
+                        </p>
+                    </div>
+                </div>
+                <button [disabled]="form.invalid" id="button" type="submit" class="btn btn-block">Iniciar
+                    Sesión
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

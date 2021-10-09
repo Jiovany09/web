@@ -1,0 +1,16 @@
+<h3 id="title">Usuarios</h3>
+
+<div id="buttons" class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label id="button" class="btn active">
+      <input type="radio" name="options" id="option1" checked  (click)="visualizacion(true)"> Activos
+    </label>
+    <label id="button" class="btn">
+      <input type="radio" name="options" id="option2" (click)="visualizacion(false)"> Eliminados
+    </label>
+</div>
+<div id="content" *ngIf="bandera">
+    <app-table-active-user></app-table-active-user>
+</div>
+<div id="content" *ngIf="!bandera">
+    <app-table-eliminate-user></app-table-eliminate-user>
+</div>

@@ -1,0 +1,99 @@
+<h3 id="title">Contenedores</h3>
+
+<div id="buttons" class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label id="button" class="btn active">
+    <input type="radio" name="options" id="option1" checked (click)="visualizacion(true)"> Activos
+  </label>
+  <label id="button" class="btn">
+    <input type="radio" name="options" id="option2" (click)="visualizacion(false)"> Eliminados
+  </label>
+</div>
+<div id="add">
+  <button id="button" class="btn" data-bs-toggle="modal" data-bs-target="#agregarContenedor">Agregar Contenedor</button>
+</div>
+
+<div class="modal fade" id="agregarContenedor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form [formGroup]="form" (ngSubmit)="guardar($event)">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Agregar Contenedor</h5>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3 col-12">
+            <label for="serial">Serial</label>
+            <input formControlName="serial" name="serial" type="text" id="serial" class="form-control"
+              placeholder="Serial" [ngClass]="{ 'is-invalid': serialInvalid }">
+            <div *ngIf="serialInvalid" class="invalid-feedback">
+              <p *ngIf="serial.hasError('required')">
+                Este campo es requerido
+              </p>
+              <p *ngIf="serial.hasError('pattern')">
+                No se aceptan caracteres especiales o espacios
+              </p>
+              <p *ngIf="serial.hasError('minlength')">
+                El mínimo es de 15 caracteres
+              </p>
+              <p *ngIf="serial.hasError('maxlength')">
+                El máximo es de 20 caracteres
+              </p>
+            </div>
+          </div>
+          <div class="mb-3 col-12">
+            <label for="empleado">Empleado asignado</label>
+            <div class="col">
+              <select formControlName="empleado_id" name="empleado_id" class="form-select" id="empleado"
+                aria-label="Default select example" [ngClass]="{ 'is-invalid': empleadoInvalid }">
+                <option selected>Seleccionar</option>
+                <option *ngFor="let data of empleados" value="{{data.id}}">{{data.nombre}} {{data.paterno}}
+                  {{data.materno}}</option>
+              </select>
+              <div *ngIf="empleadoInvalid" class="invalid-feedback">
+                <p *ngIf="empleado_id.hasError('required')">
+                  Este campo es requerido
+                </p>
+                <p *ngIf="empleado_id.hasError('pattern')">
+                  Este campo es requerido
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 col-12">
+            <label for="generador">Generador</label>
+            <div class="col">
+              <select formControlName="generador_id" name="generador_id" class="form-select" id="generador"
+                aria-label="Default select example" [ngClass]="{ 'is-invalid': generadorInvalid }">
+                <option selected>Seleccionar</option>
+                <option *ngFor="let generador of generadores" value="{{generador.id}}">{{generador.generador}}</option>
+              </select>
+              <div *ngIf="generadorInvalid" class="invalid-feedback">
+                <p *ngIf="generador_id.hasError('required')">
+                  Este campo es requerido
+                </p>
+                <p *ngIf="generador_id.hasError('pattern')">
+                  Este campo es requerido
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="limpiar()">
+            <i class="far fa-window-close"></i> Cancelar
+          </button>
+          <button type="submit" class="btn btn-success" data-bs-dismiss="modal" [disabled]="form.invalid"
+            (click)="guardar($event)">
+            <i class="far fa-save"></i> Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="content" *ngIf="bandera">
+  <app-table-active-content></app-table-active-content>
+</div>
+<div id="content" *ngIf="!bandera">
+  <app-table-delete-content></app-table-delete-content>
+</div>

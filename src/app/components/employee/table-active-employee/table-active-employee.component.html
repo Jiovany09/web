@@ -1,0 +1,157 @@
+<div class="mat-elevation-z8" id="contentTable">
+    <mat-form-field id="input">
+        <mat-label>Buscar por clave, nombre o correo</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por clave, nombre o correo" #input>
+    </mat-form-field>
+    <div id="contentTableWithColumsAndRows">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="clave" class="table-active">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Clave </th>
+                <td mat-cell *matCellDef="let example"> {{example.clave}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                <td mat-cell *matCellDef="let example"> {{example.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+                <td mat-cell *matCellDef="let example"> {{example.email}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="opciones">
+                <th mat-header-cell *matHeaderCellDef> Opciones </th>
+                <td mat-cell *matCellDef="let example">
+                    <button id="edit" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#editarEmpleado" (click)="editar(example.id)">
+                        <i class="far fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger" (click)="delete(example.id)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let example; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td *ngIf="empleados == ''" class="mat-cell" colspan="4">No hay información</td>
+                <td *ngIf="empleados != ''" class="mat-cell" colspan="4">Ninguna coincidencia encontrada con
+                    "{{input.value}}"
+                </td>
+            </tr>
+        </table>
+        <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
+<div class="modal fade" id="editarEmpleado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form [formGroup]="form" (ngSubmit)="actualizar($event)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Editar Empleado</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 col-12">
+                        <label for="clave">Clave</label>
+                        <input type="text" formControlName="clave" name="clave" id="clave_edit" class="form-control"
+                            placeholder="Clave" [ngClass]="{ 'is-invalid':  claveInvalid}">
+                        <div *ngIf="claveInvalid" class="invalid-feedback">
+                            <p *ngIf="clave.hasError('required')">
+                                Este campo es requerido
+                            </p>
+                            <p *ngIf="clave.hasError('pattern')">
+                                El formato debe de ser tres letras mayúsculas y tres números
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" formControlName="nombre" name="nombre" id="nombre_edit" class="form-control"
+                            placeholder="Nombre" [ngClass]="{ 'is-invalid':  nombreInvalid}">
+                        <div *ngIf="nombreInvalid" class="invalid-feedback">
+                            <p *ngIf="nombre.hasError('required')">
+                                Este campo es requerido
+                            </p>
+                            <p *ngIf="nombre.hasError('pattern')">
+                                No se aceptan caracteres especiales
+                            </p>
+                            <p *ngIf="nombre.hasError('minlength')">
+                                El mínimo es de 3 caracteres
+                            </p>
+                            <p *ngIf="nombre.hasError('maxlength')">
+                                El máximo es de 20 caracteres
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label for="paterno">Primer apellido</label>
+                        <input type="text" formControlName="paterno" name="paterno" id="paterno_edit"
+                            class="form-control" placeholder="Primer apellido"
+                            [ngClass]="{ 'is-invalid':  paternoInvalid}">
+                        <div *ngIf="paternoInvalid" class="invalid-feedback">
+                            <p *ngIf="paterno.hasError('required')">
+                                Este campo es requerido
+                            </p>
+                            <p *ngIf="paterno.hasError('pattern')">
+                                No se aceptan caracteres especiales ni espacios
+                            </p>
+                            <p *ngIf="paterno.hasError('minlength')">
+                                El mínimo es de 3 caracteres
+                            </p>
+                            <p *ngIf="paterno.hasError('maxlength')">
+                                El máximo es de 15 caracteres
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label for="materno">Segundo apellido</label>
+                        <input type="text" formControlName="materno" name="materno" id="materno_edit"
+                            class="form-control" placeholder="Segundo apellido"
+                            [ngClass]="{ 'is-invalid':  maternoInvalid}">
+                        <div *ngIf="maternoInvalid" class="invalid-feedback">
+                            <p *ngIf="materno.hasError('required')">
+                                Este campo es requerido
+                            </p>
+                            <p *ngIf="materno.hasError('pattern')">
+                                No se aceptan caracteres especiales ni espacios
+                            </p>
+                            <p *ngIf="materno.hasError('minlength')">
+                                El mínimo es de 3 caracteres
+                            </p>
+                            <p *ngIf="materno.hasError('maxlength')">
+                                El máximo es de 15 caracteres
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" formControlName="email" name="email" id="email_edit" class="form-control"
+                            placeholder="Correo electrónico" [ngClass]="{ 'is-invalid':  emailInvalid}">
+                        <div *ngIf="emailInvalid" class="invalid-feedback">
+                            <p *ngIf="email.hasError('required')">
+                                Este campo es requerido
+                            </p>
+                            <p *ngIf="email.hasError('email')">
+                                No es un email
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="limpiar()">
+                        <i class="far fa-window-close"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" [disabled]="form.invalid"
+                        (click)="actualizar($event)">
+                        <i class="far fa-save"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+#content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom right, #26859F, #99C6D2, #26859F);
+    margin: 0;
+}
+
+#title {
+    text-align: center;
+}
+
+#card {
+    width: 500px;
+    background-color: transparent;
+}
+
+#img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#button {
+    background-color: #107995;
+    color: #fff;
+}

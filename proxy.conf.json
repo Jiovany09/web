@@ -1,0 +1,8 @@
+{
+    "/api/*": {
+        "target":"https://frozen-hollows-30326.herokuapp.com",
+        "secure":false,
+        "logLevel":"debug",
+        "changeOrigin": true
+    }
+}

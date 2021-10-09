@@ -1,0 +1,62 @@
+<h3 id="title">Generadores</h3>
+
+<div id="buttons" class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label id="button" class="btn active">
+    <input type="radio" name="options" id="option1" checked (click)="visualizacion(true)"> Activos
+  </label>
+  <label id="button" class="btn">
+    <input type="radio" name="options" id="option2" (click)="visualizacion(false)"> Eliminados
+  </label>
+</div>
+<div id="add">
+  <button id="button" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#agregarGenerador">Agregar
+    Generadores</button>
+</div>
+<div class="modal fade" id="agregarGenerador" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form [formGroup]="form" (ngSubmit)="agregar($event)">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Agregar Generador</h5>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3 col-12">
+            <label for="serial">Serial</label>
+            <input type="text" formControlName="serial" name="serial" id="serial" class="form-control"
+              placeholder="Serial" [ngClass]="{ 'is-invalid': serialInvalid }">
+            <div *ngIf="serialInvalid" class="invalid-feedback">
+              <p *ngIf="serial.hasError('required')">
+                Este campo es requerido
+              </p>
+              <p *ngIf="serial.hasError('pattern')">
+                No se aceptan caracteres especiales o espacios
+              </p>
+              <p *ngIf="serial.hasError('minlength')">
+                El mínimo es de 15 caracteres
+              </p>
+              <p *ngIf="serial.hasError('maxlength')">
+                El máximo es de 20 caracteres
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="limpiar()">
+            <i class="far fa-window-close"></i> Cancelar
+          </button>
+          <button type="submit" class="btn btn-success" data-bs-dismiss="modal" [disabled]="form.invalid"
+            (click)="agregar($event)">
+            <i class="far fa-save"></i> Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="content" *ngIf="bandera">
+  <app-table-active-generator></app-table-active-generator>
+</div>
+<div id="content" *ngIf="!bandera">
+  <app-table-eliminate-generator></app-table-eliminate-generator>
+</div>

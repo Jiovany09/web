@@ -1,0 +1,47 @@
+#title{
+    text-align: center;
+    margin-top: 20px;
+}
+#contenido-grafica{
+    width: 100%;
+    margin: 0;
+}
+#contentTable{
+    margin-top: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+#descripcion{
+    font-size: 14px;
+    color: #70757a;
+}
+#grafica{
+    width: 35%;
+    margin: 0 20px;
+}
+#selecciones{
+    width: 30%;
+    margin: 0 20px;
+}
+.form-select{
+    padding: 10px 4px;
+    border-radius: 5px;
+}
+.form-select select{
+    border-radius: 5px;
+}
+#filtro{
+    margin-top: 20px;
+}
+#button{
+    background-color: #7fcff4;
+    color: white;
+}
+#seleccion{
+    background: #F3F3F3;
+    border: transparent;
+    color: #70757a;
+}
+#seleccion option{
+    color: black;
+}

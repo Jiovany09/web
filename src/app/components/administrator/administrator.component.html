@@ -1,0 +1,127 @@
+<h3 id="title">Administradores</h3>
+
+<div id="buttons" class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label id="button" class="btn active">
+        <input type="radio" name="options" id="option1" checked (click)="visualizacion(true)"> Activos
+    </label>
+    <label id="button" class="btn">
+        <input type="radio" name="options" id="option2" (click)="visualizacion(false)"> Eliminados
+    </label>
+</div>
+<div id="add">
+    <button id="button" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#insertarAdministradores">
+        Agregar Administrador
+    </button>
+</div>
+<div class="modal fade" id="insertarAdministradores" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form [formGroup]="form" (ngSubmit)="guardar($event)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Agregar Administrador</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 col-12">
+                        <label for="clave">Clave</label>
+                        <input type="text" formControlName="clave" name="clave" id="clave" class="form-control"
+                            placeholder="Clave" [ngClass]="{ 'is-invalid':  claveInvalid}">
+                        <div *ngIf="claveInvalid" class="invalid-feedback">
+                            <p *ngIf="clave.hasError('required')">
+                                Este campo es requerido
+                            </p>
+                            <p *ngIf="clave.hasError('pattern')">
+                                El formato debe de ser tres letras mayúsculas y tres números
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" formControlName="nombre" name="nombre" id="nombre" class="form-control"
+                            placeholder="Nombre" [ngClass]="{ 'is-invalid':  nombreInvalid}">
+                        <div *ngIf="nombreInvalid" class="invalid-feedback">
+                            <p *ngIf="nombre.hasError('required')">
+                                Este campo es requerido
+                            </p>
+                            <p *ngIf="nombre.hasError('pattern')">
+                                No se aceptan caracteres especiales o números
+                            </p>
+                            <p *ngIf="nombre.hasError('minlength')">
+                                El mínimo es de 3 caracteres
+                            </p>
+                            <p *ngIf="nombre.hasError('maxlength')">
+                                El máximo es de 20 caracteres
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label for="paterno">Primer apellido</label>
+                        <input type="text" formControlName="paterno" name="paterno" id="paterno" class="form-control"
+                            placeholder="Primer apellido" [ngClass]="{ 'is-invalid':  paternoInvalid}">
+                        <div *ngIf="paternoInvalid" class="invalid-feedback">
+                            <p *ngIf="paterno.hasError('required')">
+                                Este campo es requerido
+                            </p>
+                            <p *ngIf="paterno.hasError('pattern')">
+                                No se aceptan caracteres especiales, números o espacios
+                            </p>
+                            <p *ngIf="paterno.hasError('minlength')">
+                                El mínimo es de 3 caracteres
+                            </p>
+                            <p *ngIf="paterno.hasError('maxlength')">
+                                El máximo es de 15 caracteres
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label for="materno">Segundo apellido</label>
+                        <input type="text" formControlName="materno" name="materno" id="materno" class="form-control"
+                            placeholder="Segundo apellido" [ngClass]="{ 'is-invalid':  maternoInvalid}">
+                        <div *ngIf="maternoInvalid" class="invalid-feedback">
+                            <p *ngIf="materno.hasError('required')">
+                                Este campo es requerido
+                            </p>
+                            <p *ngIf="materno.hasError('pattern')">
+                                No se aceptan caracteres especiales, números o espacios
+                            </p>
+                            <p *ngIf="materno.hasError('minlength')">
+                                El mínimo es de 3 caracteres
+                            </p>
+                            <p *ngIf="materno.hasError('maxlength')">
+                                El máximo es de 15 caracteres
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" formControlName="email" name="email" id="email" class="form-control"
+                            placeholder="Correo electrónico" [ngClass]="{ 'is-invalid':  emailInvalid}">
+                        <div *ngIf="emailInvalid" class="invalid-feedback">
+                            <p *ngIf="email.hasError('required')">
+                                Este campo es requerido
+                            </p>
+                            <p *ngIf="email.hasError('email')">
+                                No es un email
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="limpiar()">
+                        <i class="far fa-window-close"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" [disabled]="form.invalid"
+                        (click)="guardar($event)">
+                        <i class="far fa-save"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="content" *ngIf="bandera">
+    <app-table-active></app-table-active>
+</div>
+<div id="content" *ngIf="!bandera">
+    <app-table-eliminate></app-table-eliminate>
+</div>

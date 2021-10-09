@@ -1,0 +1,19 @@
+table {
+    width: 100%;
+}
+  
+.mat-form-field {
+    font-size: 14px;
+    width: 40%;
+    margin-left: 20px;
+}
+#contentTable{
+    margin: 0 20px 0 20px;
+}
+#contentTableWithColumsAndRows{
+    margin: 0 20px 0 20px;
+    padding-bottom: 20px;
+}
+#input{
+    margin-top: 10px;
+}

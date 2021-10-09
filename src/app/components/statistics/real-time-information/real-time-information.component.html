@@ -1,0 +1,35 @@
+<div class="mat-elevation-z10 mt-4" id="contentTable">
+    <div class="card">
+        <div class="card-header text-center">
+            Información en tiempo real del Generador
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <div class="row" id="contenido-grafica">
+                    <div id="grafica">
+                        <img src="https://energiatoday.com/wp-content/uploads/2019/11/ETALFA_En.-electrica-300x300.png"
+                            alt="">
+                    </div>
+                    <div id="selecciones" *ngIf="generadores != 0">
+                        <div class="form-check form-switch ms-3">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                (change)="cambiarEstado($event)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">
+                                Consultar informacón
+                            </label>
+                        </div>
+                        <select [formControl]="generador" name="generador_id" class="form-select mt-4" id="generador" (change)="onChange($event.target.value)">
+                            <option *ngFor="let generador of generadores" value="{{generador.id}}">
+                                {{generador.generador}}
+                            </option>
+                        </select>
+                        <label class="mt-2">Producción de energía: {{energia}}</label>
+                    </div>
+                    <div id="selecciones" *ngIf="generadores == 0">
+                        <p>No hay información para mostrar</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

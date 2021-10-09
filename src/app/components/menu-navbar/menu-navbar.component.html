@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #107995;">
+    <button class="btn" type="button" id="menu-toggle" style="background-color: #107995; color: white;"><i
+            class="fas fa-bars"></i></button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand">
+        <img src="../../../assets/img/icono.png" width="30" height="30" alt="" loading="lazy"> Energy of Water
+    </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="far fa-user-circle" style="font-size: 20px;"></i> {{nombre}}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" (click)="logout()">
+                        <i class="fas fa-sign-out-alt" id="userIcon"></i> Cerrar sesión
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="d-flex" id="wrapper">
+    <div id="sidebar-wrapper">
+        <div class="list-group list-group-flush">
+            <a routerLink="statistics" class="list-group-item list-group-item-action" id="links">
+                <i class="fas fa-chart-bar" id="icon-icon"></i> Estadísticas
+            </a>
+            <a href="#homeSubmenu" class="list-group-item list-group-item-action dropdown-toggle" id="links"
+                data-toggle="collapse" aria-expanded="false">
+                <i class="fas fa-tasks" id="icon-icon"></i> Gestión de datos
+            </a>
+            <ul class="collapse lisst-unstyled" id="homeSubmenu">
+                <li>
+                    <a class="nav-link" routerLink="administrator"><i class="fas fa-user-tie"
+                            id="icon-icon"></i>
+                        Administradores</a>
+                </li>
+                <li>
+                    <a class="nav-link" routerLink="employee"><i class="fas fa-user"
+                            id="icon-icon"></i> Empleados</a>
+                </li>
+                <li>
+                    <a class="nav-link" routerLink="user"><i class="fas fa-user"
+                            id="icon-icon"></i> Usuarios</a>
+                </li>
+                <li>
+                    <a class="nav-link" routerLink="generator"><i class="fas fa-cogs"
+                            id="icon-icon"></i>
+                        Generadores</a>
+                </li>
+                <li>
+                    <a class="nav-link" routerLink="content"><i class="fas fa-car-battery"
+                            id="icon-icon"></i>
+                        Contenedores</a>
+                </li>
+                <li>
+                    <a class="nav-link" routerLink="detail"><i class="fas fa-info"
+                            id="icon-icon"></i> Detalles</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="page-content-wrapper">
+        <router-outlet></router-outlet>
+    </div>
+</div>

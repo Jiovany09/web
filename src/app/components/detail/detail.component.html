@@ -1,0 +1,17 @@
+<h3 id="title" *ngIf="bandera">Detalles Generadores</h3>
+<h3 id="title" *ngIf="!bandera">Detalles Contenedores</h3>
+
+<div id="buttons" class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label id="button" class="btn active">
+      <input type="radio" name="options" id="option1" checked  (click)="visualizacion(true)"> Generadores
+    </label>
+    <label id="button" class="btn">
+      <input type="radio" name="options" id="option2" (click)="visualizacion(false)"> Contenedores
+    </label>
+</div>
+<div id="content" *ngIf="bandera">
+    <app-table-active-detail></app-table-active-detail>
+</div>
+<div id="content" *ngIf="!bandera">
+    <app-table-eliminate-detail></app-table-eliminate-detail>
+</div>

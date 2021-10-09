@@ -1,0 +1,22 @@
+<div class="mat-elevation-z10 mt-4" id="contentTable">
+  <div class="card">
+    <div class="card-header text-center">
+      Generación de energía por los Generadores
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <div class="row" id="contenido-grafica">
+          <div id="grafica">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+              [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)">
+            </canvas>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item" id="descripcion">
+        Gráfica para representar la producción de energía de los generadores durante los últimos 7 días
+      </li>
+    </ul>
+  </div>
+</div>
